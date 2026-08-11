@@ -8,16 +8,25 @@ button, input { font: inherit; }
 button { color: inherit; }
 
 .desk, .notebook-shell, .received { background-color: #713317; background-image: linear-gradient(120deg, #ffb75a12, transparent 38%, #1608044d), url('./assets/indian-school-desk.webp'); background-position: center; background-size: cover; }
-.desk { position: relative; min-height: 100dvh; display: grid; place-items: center; padding: 24px; perspective: 1200px; box-shadow: inset 0 0 110px #15080585; }
+.desk { --rx: 0deg; --ry: 0deg; position: relative; min-height: 100dvh; display: grid; place-items: center; overflow: hidden; padding: 24px; perspective: 1200px; box-shadow: inset 0 0 110px #15080585; }
 .desk::after, .notebook-shell::after, .received::after { content: ''; position: fixed; z-index: 20; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 43%, transparent 48%, #1207046b 120%), repeating-linear-gradient(0deg, #ffffff0a 0 1px, transparent 1px 4px); mix-blend-mode: soft-light; }
-.book-stage { position: relative; z-index: 1; width: min(540px, 78vw); aspect-ratio: .72; perspective: 1400px; filter: saturate(.92) contrast(1.04); }
+.sunbeam { position: absolute; z-index: 0; top: -15%; left: 14%; width: 58%; height: 130%; pointer-events: none; background: linear-gradient(90deg, transparent, #ffc86d2c 42%, #fff0bf32 58%, transparent); clip-path: polygon(17% 0, 78% 0, 100% 100%, 0 100%); mix-blend-mode: screen; animation: breatheLight 5s ease-in-out infinite alternate; }
+.fan-shadow { position: absolute; z-index: 1; top: -19vmin; right: -7vmin; width: 72vmin; aspect-ratio: 1; pointer-events: none; opacity: .14; animation: turnFan 11s linear infinite; }
+.fan-shadow::after { content: ''; position: absolute; top: 46%; left: 46%; width: 8%; aspect-ratio: 1; border-radius: 50%; background: #1b0907; }
+.fan-shadow i { position: absolute; top: 48%; left: 50%; width: 46%; height: 7%; border-radius: 100% 10% 70% 18%; background: linear-gradient(90deg, #1b0907, #1b0907aa 65%, transparent); transform-origin: 0 50%; }
+.fan-shadow i:nth-child(2) { transform: rotate(120deg); }
+.fan-shadow i:nth-child(3) { transform: rotate(240deg); }
+.flying-note { position: absolute; z-index: 5; left: 2vw; bottom: 1vh; width: clamp(190px, 25vw, 380px); aspect-ratio: 4 / 3; pointer-events: none; background: url('./assets/paper-plane.webp') center/contain no-repeat; filter: drop-shadow(10px 16px 12px #190806a8); animation: noteFlight 1.55s cubic-bezier(.16,.82,.23,1) .2s both; }
+.period-slip { position: absolute; z-index: 2; top: 7vh; left: 6vw; margin: 0; padding: 12px 18px 9px; color: #183c71; background: #dfd4b5; box-shadow: 4px 5px 0 #502212, 8px 12px 20px #1d0a0870; font: 700 clamp(19px, 2.3vw, 30px)/.95 'Caveat'; transform: rotate(-5deg); }
+.period-slip span { display: block; margin-bottom: 4px; color: #6b1d18; font: 500 8px/1 'DM Mono'; letter-spacing: .18em; }
+.book-stage { position: relative; z-index: 3; width: min(540px, 78vw); aspect-ratio: .72; perspective: 1400px; filter: saturate(.92) contrast(1.04); transform: rotateX(var(--rx)) rotateY(var(--ry)) translateZ(12px); transform-style: preserve-3d; transition: transform .22s ease-out; }
 .cover-page-underlay { position: absolute; inset: 1% -1% -1% 1%; border: 1px solid #b39c70; border-radius: 3px 10px 10px 3px; background-color: #e7d4a7; background-image: linear-gradient(90deg, transparent 0 11%, #bd5c5c80 11% 11.3%, transparent 11.3%), repeating-linear-gradient(transparent 0 27px, #668db04d 28px 29px); box-shadow: 8px 14px 0 #6d2e16, 13px 24px 35px #1b090899; }
 .cover { position: relative; z-index: 2; width: 100%; height: 100%; overflow: hidden; padding: 7% 8%; color: #24120c; background: #c85420; border: 1px solid #6b2915; border-radius: 3px 11px 11px 4px; box-shadow: -9px 12px 0 #6d2e16, -14px 18px 0 #3a190f75, 8px 35px 65px #1b0908c4; background-image: radial-gradient(circle at 28% 16%, #ffad6266, transparent 33%), linear-gradient(90deg, #00000015 1px, transparent 1px), linear-gradient(#ffffff0a 1px, transparent 1px); background-size: auto, 4px 4px, 4px 4px; transform: rotate(.45deg); transform-origin: left center; transform-style: preserve-3d; animation: land .8s cubic-bezier(.2,.8,.2,1) both; }
 .cover.opening { pointer-events: none; animation: openCover .9s cubic-bezier(.6,0,.18,1) both; }
 .cover::before { content: ''; position: absolute; inset: 0 auto 0 3%; width: 4px; background: #64251470; box-shadow: 4px 0 #ef8b4540, 9px 0 #6f2d1828; }
 .cover::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5; background: repeating-linear-gradient(88deg, transparent 0 14px, #56210e0c 15px), linear-gradient(98deg, transparent 65%, #611e1026 66%, transparent 68%); }
 .cover-brand { position: absolute; z-index: 2; top: 52%; left: 10%; display: flex; align-items: end; gap: 15px; color: #23120c; transform: rotate(-1.5deg); }
-.cover-brand strong { font: 900 clamp(48px, 9vw, 78px)/.76 Arial, sans-serif; letter-spacing: -.09em; }
+.cover-brand strong { font: 900 clamp(58px, 11vw, 98px)/.72 Arial, sans-serif; letter-spacing: -.1em; text-shadow: 2px 2px 0 #e9863f, 4px 4px 0 #842c16; }
 .cover-brand small { margin-bottom: 3px; font: 700 clamp(20px, 4vw, 35px)/1 'Noto Sans Devanagari', sans-serif; }
 .cover-edition { position: absolute; top: 7.2%; left: 9%; font-size: clamp(6px, 1vw, 9px); letter-spacing: .18em; opacity: .72; }
 .identity-slip { position: absolute; z-index: 2; top: 17%; left: 9%; right: 8%; padding: 4% 5% 3%; border: 1px solid #9a8d76; color: #29251f; background-color: #fffdf6; background-image: repeating-linear-gradient(transparent 0 26px, #7b9cbd38 27px 28px); box-shadow: 1px 2px 0 #9e3d1c, 4px 6px 10px #5a1f1366; transform: rotate(-.35deg); }
@@ -38,6 +47,11 @@ button { color: inherit; }
 .notebook-shell { position: relative; min-height: 100dvh; display: grid; align-items: center; padding: 4vmin 4vmin 4vmin clamp(220px, 20vw, 310px); box-shadow: inset 0 0 110px #15080585; }
 .notebook-shell > * { z-index: 1; }
 .notebook { position: relative; display: grid; grid-template-columns: 1fr 1fr; width: min(980px, 72vw); height: min(78vh, 740px); margin: auto; perspective: 1300px; filter: drop-shadow(0 28px 25px #1d0e0b99); transform: rotate(-.2deg); isolation: isolate; }
+.opening-spread { animation: spreadSettle 1.05s cubic-bezier(.18,.78,.2,1) both; }
+.opening-spread .page-left { animation: openLeftPage .95s cubic-bezier(.18,.78,.2,1) both; }
+.opening-spread .page-right { animation: openRightPage .95s cubic-bezier(.18,.78,.2,1) both; }
+.opening-spread .draw-surface { animation: revealInk .42s ease-out .58s both; }
+.opening-desk .tools { animation: toolsArrive .7s cubic-bezier(.18,.78,.2,1) .42s both; }
 .notebook::before { content: ''; position: absolute; z-index: -2; inset: -5px -7px -9px; border-radius: 8px; background: #813719; box-shadow: 0 5px 0 #4a1f12, 0 10px 18px #210c0866; transform: rotate(.35deg); }
 .notebook::after { content: ''; position: absolute; z-index: 5; top: 2%; bottom: 2%; left: 50%; width: 10px; pointer-events: none; transform: translateX(-50%); background: radial-gradient(circle, #8d795c 0 1px, transparent 1.7px) center/5px 28px, linear-gradient(90deg, transparent, #6b543529, transparent); opacity: .75; }
 .page { position: relative; overflow: hidden; border: 1px solid #b9a06f; background-color: #e7d4a7; background-image: linear-gradient(90deg, transparent 0 10%, #bd5c5c80 10% 10.25%, transparent 10.25%), repeating-linear-gradient(transparent 0 31px, #668db047 32px 33px); box-shadow: inset 0 0 44px #61431f3b, inset 0 -8px 12px #7c63332e; }
@@ -100,7 +114,15 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: 
 .privacy { color: #f2e7d2; margin: 0; padding: 2px 8px; background: #32150dab; }
 
 @keyframes land { from { transform: rotateY(-25deg) translateY(30px); opacity: 0; } }
-@keyframes openCover { 0% { transform: rotate(.45deg) rotateY(0); } 45% { box-shadow: -24px 20px 26px #1b0908a8; } 100% { transform: translateX(-48%) rotateY(-118deg) rotateZ(-2deg); box-shadow: -5px 9px 8px #1b090866; } }
+@keyframes openCover { 0% { transform: rotate(.45deg) rotateY(0) translateZ(0); } 45% { box-shadow: -34px 28px 34px #1b0908a8; transform: translateX(-17%) rotateY(-62deg) rotateZ(-1deg) translateZ(90px); } 100% { transform: translateX(-52%) rotateY(-128deg) rotateZ(-3deg) translateZ(8px); box-shadow: -5px 9px 8px #1b090866; } }
+@keyframes noteFlight { 0% { opacity: 0; transform: translate3d(110vw,-65vh,480px) rotateZ(38deg) rotateX(58deg) scale(.3); } 55% { opacity: 1; transform: translate3d(22vw,-12vh,170px) rotateZ(-14deg) rotateX(24deg) scale(.75); } 82% { transform: translate3d(-1vw,1vh,18px) rotateZ(5deg) rotateX(4deg) scale(1.04); } 100% { opacity: 1; transform: translate3d(0,0,0) rotateZ(-3deg) scale(1); } }
+@keyframes turnFan { to { transform: rotate(360deg); } }
+@keyframes breatheLight { to { opacity: .55; transform: translateX(1.5%); } }
+@keyframes spreadSettle { from { opacity: 0; transform: rotateX(24deg) translateY(10vh) scale(.74); } to { opacity: 1; transform: rotateX(0) translateY(0) scale(1) rotate(-.2deg); } }
+@keyframes openLeftPage { from { transform: rotateY(86deg); } to { transform: rotateY(0); } }
+@keyframes openRightPage { from { transform: rotateY(-24deg); } to { transform: rotateY(0); } }
+@keyframes revealInk { from { opacity: 0; } }
+@keyframes toolsArrive { from { opacity: 0; transform: translateY(-44%) translateX(-90%) rotate(-8deg); } }
 @keyframes rise { from { transform: translateY(100%); } }
 @keyframes liftPass { to { transform: translate(-6px, -5px); filter: drop-shadow(-12px -12px 10px #a62a2780); } }
 @keyframes slideNote { 0% { opacity: 0; transform: translateX(120%) rotate(2deg); } 12%, 82% { opacity: 1; transform: translateX(0) rotate(-2deg); } 100% { opacity: 0; transform: translateX(120%) rotate(2deg); } }

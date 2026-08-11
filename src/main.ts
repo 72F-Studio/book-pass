@@ -128,6 +128,10 @@ function redraw(canvas: HTMLCanvasElement, list = strokes) {
 function cover(isReply = false) {
   app.innerHTML = `
     <section class="desk">
+      <div class="sunbeam" aria-hidden="true"></div>
+      <div class="fan-shadow" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="flying-note" aria-hidden="true"></div>
+      <p class="period-slip" aria-hidden="true"><span>PERIOD 04</span>last bench only.</p>
       <div class="book-stage">
         <div class="cover-page-underlay" aria-hidden="true"></div>
         <div class="cover ${isReply ? 'reply-cover' : ''}">
@@ -148,12 +152,20 @@ function cover(isReply = false) {
       </div>
     </section>`
   const input = app.querySelector<HTMLInputElement>('#name')!
+  const desk = app.querySelector<HTMLElement>('.desk')!
+  desk.addEventListener('pointermove', event => {
+    const x = event.clientX / innerWidth - .5
+    const y = event.clientY / innerHeight - .5
+    desk.style.setProperty('--rx', `${(-y * 4).toFixed(2)}deg`)
+    desk.style.setProperty('--ry', `${(x * 5).toFixed(2)}deg`)
+  })
+  desk.addEventListener('pointerleave', () => desk.removeAttribute('style'))
   const open = () => {
     sender = input.value.trim() || 'someone'
     localStorage.setItem('book-pass-name', sender)
     const coverElement = app.querySelector<HTMLElement>('.cover')!
     coverElement.addEventListener('animationend', event => {
-      if (event.animationName === 'openCover') drawPage()
+      if (event.animationName === 'openCover') drawPage(true)
     }, { once: true })
     coverElement.classList.add('opening')
   }
@@ -167,14 +179,14 @@ function escapeHtml(value: string) {
   return node.innerHTML
 }
 
-function drawPage() {
+function drawPage(opening = false) {
   const saved = sessionStorage.getItem(STORAGE_KEY)
   if (!strokes.length && saved) {
     try { strokes = JSON.parse(saved) as Stroke[] } catch { /* old draft, ignore */ }
   }
   app.innerHTML = `
-    <section class="notebook-shell">
-      <div class="notebook">
+    <section class="notebook-shell ${opening ? 'opening-desk' : ''}">
+      <div class="notebook ${opening ? 'opening-spread' : ''}">
         <div class="page page-left" aria-hidden="true"><span class="spread-title">DO NOT READ</span><span class="page-number">12</span></div>
         <div class="page page-right">
           <div class="ink-status" aria-live="polite"></div>
