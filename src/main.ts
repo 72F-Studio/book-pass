@@ -42,6 +42,9 @@ function decode(value: string): Note | null {
   }
 }
 
+const codecCheck: Note = { v: 1, from: 'test', strokes: [{ tool: 'pen', color: 0, points: [[.1, .2, .5]] }] }
+if (JSON.stringify(decode(encode(codecCheck))) !== JSON.stringify(codecCheck)) throw new Error('Note codec self-check failed')
+
 function payloadBytes(next = strokes) {
   return zlibSync(strToU8(JSON.stringify({ v: 1, from: sender, strokes: next })), { level: 9 }).length
 }
@@ -252,6 +255,7 @@ function passNote() {
           <button class="share-note">PASS TO A FRIEND <span>↗</span></button>
           <button class="copy-note">copy link</button>
           <small>nothing stored. the note lives in this link.</small>
+          <a class="studio-mark" href="https://72fstudio.in" target="_blank" rel="noreferrer">a 72F Studio distraction ↗</a>
         </section>
       </div>`)
     const share = app.querySelector<HTMLButtonElement>('.share-note')!

@@ -56,6 +56,7 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: 
 .share-note span { float: right; }
 .copy-note { border: 0; border-bottom: 1px solid; padding: 4px; background: transparent; cursor: pointer; }
 .pass-sheet small, .privacy { color: #6f6655; font-size: 10px; text-align: center; }
+.studio-mark { margin-top: 5px; color: #3e372c; font: 600 17px 'Caveat'; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 
 .received { min-height: 100dvh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; justify-items: center; gap: 12px; padding: 18px 18px 12px; background: radial-gradient(circle at 50% 30%, #815d45, #432920); perspective: 1200px; }
 .from { margin: 0; color: #eadfc9; font: 25px 'Caveat'; }
