@@ -13,6 +13,10 @@
 - [x] Public GitHub repository and Pages workflow
 - [x] Live mobile browser validation: cover, draw, pass, receive
 - [x] Indian school-desk art direction with responsive desktop/mobile assets
+- [x] White school label with generated class, roll number, house, and school details
+- [x] Photo-based geometry-box tool selector with no toolbar chrome
+- [x] Two-page desktop drawing, aspect-preserving received notes, and cover-open animation
+- [x] Explicit page-limit notice and enlarged pass affordance
 
 ## Verification
 

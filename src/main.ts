@@ -6,13 +6,29 @@ import './style.css'
 type Tool = 'pen' | 'pencil' | 'brush'
 type Point = [number, number, number]
 type Stroke = { tool: Tool; color: number; points: Point[] }
-type Note = { v: 1; from: string; strokes: Stroke[] }
+type Note = { v: 1; from: string; strokes: Stroke[]; layout?: 'page' | 'spread'; aspect?: number }
 
 const COLORS = ['#174c92', '#17191d', '#b62929', '#1d6a43']
 const MAX_BYTES = 2000
 const TARGET_BYTES = 1500
 const STORAGE_KEY = 'book-pass-draft'
 const app = document.querySelector<HTMLElement>('#app')!
+const SCHOOL_DETAILS = (() => {
+  const saved = sessionStorage.getItem('book-pass-school-details')
+  if (saved) {
+    try { return JSON.parse(saved) as { school: string; className: string; roll: number; house: string } }
+    catch { sessionStorage.removeItem('book-pass-school-details') }
+  }
+  const pick = <T,>(values: T[]) => values[Math.floor(Math.random() * values.length)]
+  const details = {
+    school: pick(['SARASWATI VIDYA MANDIR', 'ZILLA PARISHAD HIGH SCHOOL', 'ST. MARY\'S CONVENT SCHOOL', 'NEW ENGLISH SCHOOL']),
+    className: `${pick(['VI', 'VII', 'VIII', 'IX', 'X'])}-${pick(['A', 'B', 'C'])}`,
+    roll: Math.floor(Math.random() * 48) + 1,
+    house: pick(['ASHOKA', 'TAGORE', 'NEHRU', 'SHIVAJI']),
+  }
+  sessionStorage.setItem('book-pass-school-details', JSON.stringify(details))
+  return details
+})()
 
 let strokes: Stroke[] = []
 let active: Stroke | null = null
@@ -46,7 +62,16 @@ const codecCheck: Note = { v: 1, from: 'test', strokes: [{ tool: 'pen', color: 0
 if (JSON.stringify(decode(encode(codecCheck))) !== JSON.stringify(codecCheck)) throw new Error('Note codec self-check failed')
 
 function payloadBytes(next = strokes) {
-  return zlibSync(strToU8(JSON.stringify({ v: 1, from: sender, strokes: next })), { level: 9 }).length
+  return zlibSync(strToU8(JSON.stringify({ v: 1, from: sender, strokes: next, layout: currentLayout(), aspect: currentAspect() })), { level: 9 }).length
+}
+
+function currentLayout(): Note['layout'] {
+  return matchMedia('(min-width: 701px)').matches ? 'spread' : 'page'
+}
+
+function currentAspect() {
+  const canvas = app.querySelector<HTMLCanvasElement>('#paper')
+  return canvas ? +(canvas.clientWidth / canvas.clientHeight).toFixed(3) : 1
 }
 
 function path(points: number[][]) {
@@ -103,25 +128,34 @@ function redraw(canvas: HTMLCanvasElement, list = strokes) {
 function cover(isReply = false) {
   app.innerHTML = `
     <section class="desk">
-      <div class="cover ${isReply ? 'reply-cover' : ''}">
-        <div class="cover-brand"><small>BOOK PASS</small><strong>पर्ची</strong></div>
-        <span class="cover-edition">SCHOOL SUPPLY · NO. 01</span>
-        <div class="cover-lines" aria-hidden="true"></div>
-        <label class="name-label">
-          <span>नाम / NAME</span>
-          <input id="name" maxlength="28" autocomplete="name" value="${escapeHtml(sender)}" autofocus />
-        </label>
-        <p class="cover-copy">${isReply ? `${escapeHtml(replyTo)} passed you a note.` : 'pass notes like school.<br>typing is disabled.'}</p>
-        <span class="cover-stamp">ROUGH<br>WORK</span>
-        <button class="open-book" type="button">OPEN <span>→</span></button>
-        <span class="notebook-word">Notebook</span>
+      <div class="book-stage">
+        <div class="cover-page-underlay" aria-hidden="true"></div>
+        <div class="cover ${isReply ? 'reply-cover' : ''}">
+          <span class="cover-edition">SCHOOL SUPPLY · NO. 01</span>
+          <div class="identity-slip">
+            <p><span>SCHOOL</span><strong>${SCHOOL_DETAILS.school}</strong></p>
+            <label class="name-label"><span>Name:</span><input id="name" maxlength="28" autocomplete="name" value="${escapeHtml(sender)}" autofocus /></label>
+            <div class="student-meta">
+              <p><span>CLASS</span><b>${SCHOOL_DETAILS.className}</b></p>
+              <p><span>ROLL NO.</span><b>${SCHOOL_DETAILS.roll}</b></p>
+              <p><span>HOUSE</span><b>${SCHOOL_DETAILS.house}</b></p>
+            </div>
+          </div>
+          <div class="cover-brand"><strong>BOOK<br>PASS</strong><small>पर्ची</small></div>
+          <span class="cover-stamp">ROUGH<br>WORK</span>
+          <button class="open-book" type="button">OPEN <span>→</span></button>
+        </div>
       </div>
     </section>`
   const input = app.querySelector<HTMLInputElement>('#name')!
   const open = () => {
     sender = input.value.trim() || 'someone'
     localStorage.setItem('book-pass-name', sender)
-    drawPage()
+    const coverElement = app.querySelector<HTMLElement>('.cover')!
+    coverElement.addEventListener('animationend', event => {
+      if (event.animationName === 'openCover') drawPage()
+    }, { once: true })
+    coverElement.classList.add('opening')
   }
   app.querySelector('button')!.addEventListener('click', open)
   input.addEventListener('keydown', event => event.key === 'Enter' && open())
@@ -133,10 +167,6 @@ function escapeHtml(value: string) {
   return node.innerHTML
 }
 
-function toolIcon(value: Tool) {
-  return value === 'pen' ? '╱' : value === 'pencil' ? '✎' : '▰'
-}
-
 function drawPage() {
   const saved = sessionStorage.getItem(STORAGE_KEY)
   if (!strokes.length && saved) {
@@ -145,31 +175,45 @@ function drawPage() {
   app.innerHTML = `
     <section class="notebook-shell">
       <div class="notebook">
-        <div class="page page-left" aria-hidden="true"><span class="ghost-note">DO NOT<br>READ THIS</span><span class="page-number">12</span></div>
+        <div class="page page-left" aria-hidden="true"><span class="spread-title">DO NOT READ</span><span class="page-number">12</span></div>
         <div class="page page-right">
-          <canvas id="paper" aria-label="Draw your note here"></canvas>
-          <div class="ink-status" aria-live="polite"><span></span></div>
+          <div class="ink-status" aria-live="polite"></div>
+          <aside class="limit-note" role="status">PAGE FULL.<strong>pass the note now.</strong></aside>
           <span class="page-number">13</span>
           <button class="pass" type="button" aria-label="Pass this note"><span>pass it</span></button>
         </div>
+        <canvas id="paper" class="draw-surface" aria-label="Draw your note here"></canvas>
         <div class="fold-layer" aria-hidden="true"><span>passed.</span></div>
       </div>
       <nav class="tools" aria-label="Drawing tools">
-        ${(['pen', 'pencil', 'brush'] as Tool[]).map(value => `<button data-tool="${value}" class="${tool === value ? 'selected' : ''}" aria-label="${value}">${toolIcon(value)}</button>`).join('')}
-        <i></i>
-        <button data-action="undo" aria-label="Undo">↶</button>
+        ${(['pen', 'pencil', 'brush'] as Tool[]).map(value => `<button data-tool="${value}" class="${tool === value ? 'selected' : ''}" aria-label="${value}"></button>`).join('')}
+        <button data-action="undo" aria-label="Undo"></button>
         <div class="colours" aria-label="Ink colour">
-          ${COLORS.map((value, index) => `<button data-colour="${index}" class="${color === index ? 'selected' : ''}" style="--ink:${value}" aria-label="${['Blue', 'Black', 'Red', 'Green'][index]}"></button>`).join('')}
+          ${COLORS.map((_, index) => `<button data-colour="${index}" class="${color === index ? 'selected' : ''}" aria-label="${['Blue', 'Black', 'Red', 'Green'][index]}"></button>`).join('')}
         </div>
       </nav>
     </section>`
 
   const canvas = app.querySelector<HTMLCanvasElement>('#paper')!
-  const ink = app.querySelector<HTMLElement>('.ink-status span')!
+  const ink = app.querySelector<HTMLElement>('.ink-status')!
+  const page = app.querySelector<HTMLElement>('.page-right')!
+  const passButton = app.querySelector<HTMLButtonElement>('.pass')!
+  const limitNote = app.querySelector<HTMLElement>('.limit-note')!
+  const showLimitNote = () => {
+    limitNote.classList.remove('show')
+    void limitNote.offsetWidth
+    limitNote.classList.add('show')
+  }
+  const setPageFull = (full: boolean) => {
+    pageFull = full
+    page.classList.toggle('full', full)
+    passButton.classList.toggle('pulse', full)
+    passButton.querySelector('span')!.textContent = full ? 'PASS NOW' : 'pass it'
+  }
   const updateInk = () => {
     const used = payloadBytes()
-    ink.style.width = `${Math.min(100, used / MAX_BYTES * 100)}%`
-    ink.parentElement!.classList.toggle('near-full', used > TARGET_BYTES)
+    ink.textContent = pageFull ? 'PAGE FULL' : used > TARGET_BYTES ? 'running out of page…' : ''
+    ink.classList.toggle('near-full', used > TARGET_BYTES)
   }
   const point = (event: PointerEvent): Point => {
     const rect = canvas.getBoundingClientRect()
@@ -181,7 +225,11 @@ function drawPage() {
   }
 
   canvas.addEventListener('pointerdown', event => {
-    if (pageFull || event.button !== 0) return
+    if (pageFull) {
+      showLimitNote()
+      return
+    }
+    if (event.button !== 0) return
     if (event.pointerType === 'pen') stylusSeen = true
     if (stylusSeen && event.pointerType === 'touch') return
     canvas.setPointerCapture(event.pointerId)
@@ -201,9 +249,8 @@ function drawPage() {
     active.points = simplified.map(({ x, y, p }) => [+(x / rect.width).toFixed(3), +(y / rect.height).toFixed(3), +p.toFixed(2)])
     const next = [...strokes, active]
     if (payloadBytes(next) > MAX_BYTES) {
-      pageFull = true
-      app.querySelector('.page-right')!.classList.add('full')
-      app.querySelector('.pass')!.classList.add('pulse')
+      setPageFull(true)
+      showLimitNote()
     } else {
       strokes = next
       undoCount = 0
@@ -229,12 +276,12 @@ function drawPage() {
     if (!strokes.length || undoCount >= 20) return
     strokes.pop()
     undoCount++
-    pageFull = false
+    setPageFull(false)
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(strokes))
     redraw(canvas)
     updateInk()
   })
-  app.querySelector<HTMLButtonElement>('.pass')!.addEventListener('click', () => passNote())
+  passButton.addEventListener('click', () => passNote())
   const observer = new ResizeObserver(() => redraw(canvas))
   observer.observe(canvas)
   redraw(canvas)
@@ -246,7 +293,7 @@ function passNote() {
   const notebook = app.querySelector('.notebook')!
   notebook.classList.add('folding')
   setTimeout(() => {
-    const fragment = encode({ v: 1, from: sender, strokes })
+    const fragment = encode({ v: 1, from: sender, strokes, layout: currentLayout(), aspect: currentAspect() })
     const url = `${location.origin}${location.pathname}#${fragment}`
     notebook.classList.remove('folding')
     app.insertAdjacentHTML('beforeend', `
@@ -256,6 +303,7 @@ function passNote() {
           <p>fold it. pass it.</p>
           <button class="share-note">PASS TO A FRIEND <span>↗</span></button>
           <button class="copy-note">copy link</button>
+          <button class="back-note">back to notebook</button>
           <small>nothing stored. the note lives in this link.</small>
           <a class="studio-mark" href="https://72fstudio.in" target="_blank" rel="noreferrer">a 72F Studio distraction ↗</a>
         </section>
@@ -271,6 +319,7 @@ function passNote() {
       copyButton.textContent = 'copied ✓'
     })
     const backdrop = app.querySelector<HTMLElement>('.sheet-backdrop')!
+    app.querySelector<HTMLButtonElement>('.back-note')!.addEventListener('click', () => backdrop.remove())
     backdrop.addEventListener('click', event => {
       if (event.target === backdrop) backdrop.remove()
     })
@@ -283,10 +332,11 @@ async function copy(value: string) {
 
 function receive(note: Note) {
   replyTo = note.from
+  const aspect = Number.isFinite(note.aspect) ? Math.max(.35, Math.min(1.8, note.aspect!)) : note.layout === 'spread' ? 1.33 : .7
   app.innerHTML = `
     <section class="received">
       <p class="from"><span>${escapeHtml(note.from)}</span> passed you this.</p>
-      <div class="received-paper unfolding">
+      <div class="received-paper ${note.layout === 'spread' ? 'spread' : ''} unfolding" style="--note-aspect:${aspect}">
         <canvas id="received-canvas" aria-label="A handwritten note from ${escapeHtml(note.from)}"></canvas>
       </div>
       <button class="write-back" type="button">write back <span>↗</span></button>
@@ -307,6 +357,7 @@ function receive(note: Note) {
   app.querySelector('button')!.addEventListener('click', () => {
     history.replaceState(null, '', location.pathname)
     strokes = []
+    pageFull = false
     sessionStorage.removeItem(STORAGE_KEY)
     sender ? drawPage() : cover(true)
   })
