@@ -7,9 +7,9 @@ body { min-height: 100dvh; overflow: hidden; background: #713317; }
 button, input { font: inherit; }
 button { color: inherit; }
 
-.desk, .notebook-shell, .received { background-color: #8d5c27; background-image: linear-gradient(120deg, #ffd98b0d, transparent 42%, #1327181f), url('./assets/indian-school-desk-v2.webp'); background-position: center; background-size: cover; }
+.desk, .notebook-shell, .received { background-color: #e88a1d; background-image: linear-gradient(115deg, #ffe38a12, transparent 45%, #075b3a12), url('./assets/indian-school-desk-watercolour.webp'); background-position: center; background-size: cover; }
 .desk { --rx: 0deg; --ry: 0deg; position: relative; min-height: 100dvh; display: grid; place-items: center; overflow: hidden; padding: 24px; perspective: 1200px; box-shadow: inset 0 0 110px #15080585; }
-.desk::after, .notebook-shell::after, .received::after { content: ''; position: fixed; z-index: 20; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 43%, transparent 48%, #1207046b 120%), repeating-linear-gradient(0deg, #ffffff0a 0 1px, transparent 1px 4px); mix-blend-mode: soft-light; }
+.desk::after, .notebook-shell::after, .received::after { content: ''; position: fixed; z-index: 20; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 43%, transparent 61%, #102b1e38 130%); }
 .sunbeam { position: absolute; z-index: 0; top: -15%; left: 14%; width: 58%; height: 130%; pointer-events: none; background: linear-gradient(90deg, transparent, #fff0bf1a 48%, transparent); clip-path: polygon(17% 0, 78% 0, 100% 100%, 0 100%); mix-blend-mode: screen; animation: breatheLight 7s ease-in-out infinite alternate; }
 .fan-shadow { position: absolute; z-index: 1; top: -19vmin; right: -7vmin; width: 72vmin; aspect-ratio: 1; pointer-events: none; opacity: .065; animation: turnFan 14s linear infinite; }
 .fan-shadow::after { content: ''; position: absolute; top: 46%; left: 46%; width: 8%; aspect-ratio: 1; border-radius: 50%; background: #1b0907; }
@@ -18,16 +18,16 @@ button { color: inherit; }
 .fan-shadow i:nth-child(3) { transform: rotate(240deg); }
 .book-stage { position: relative; z-index: 3; width: min(540px, 78vw); aspect-ratio: .72; perspective: 1400px; filter: saturate(.92) contrast(1.04); transform: rotateX(var(--rx)) rotateY(var(--ry)) translateZ(12px); transform-style: preserve-3d; transition: transform .22s ease-out; }
 .book-stage:has(.cover.opening) { transform: translateX(24%) rotateX(2deg) translateZ(20px); transition-duration: .9s; }
-.cover-page-underlay { position: absolute; inset: 1% -1% -1% 1%; border: 1px solid #b39c70; border-radius: 3px 10px 10px 3px; background-color: #e7d4a7; background-image: linear-gradient(90deg, transparent 0 11%, #bd5c5c80 11% 11.3%, transparent 11.3%), repeating-linear-gradient(transparent 0 27px, #668db04d 28px 29px); box-shadow: 8px 14px 0 #6d2e16, 13px 24px 35px #1b090899; }
-.cover { position: relative; z-index: 2; width: 100%; height: 100%; overflow: hidden; padding: 7% 8%; color: #292016; background-color: #9f774c; border: 1px solid #5f4329; border-radius: 3px 9px 9px 4px; box-shadow: -8px 11px 0 #6b4b30, -13px 17px 0 #33221675, 8px 35px 65px #1b120bc4; background-image: radial-gradient(circle at 24% 13%, #e7c38a40, transparent 34%), repeating-linear-gradient(88deg, transparent 0 15px, #4d35120c 16px), linear-gradient(100deg, transparent 68%, #40280f1a 69%, transparent 71%); transform: rotate(.35deg); transform-origin: left center; transform-style: preserve-3d; backface-visibility: hidden; animation: land .8s cubic-bezier(.2,.8,.2,1) both; }
+.cover-page-underlay { position: absolute; inset: 1% -1% -1% 1%; border: 1px solid #b59a63; border-radius: 3px 10px 10px 3px; background-color: #f0dfae; background-image: linear-gradient(90deg, transparent 0 11%, #cf505b8a 11% 11.3%, transparent 11.3%), repeating-linear-gradient(transparent 0 27px, #4d83b951 28px 29px); box-shadow: 8px 14px 0 #6c3f20, 13px 24px 35px #1b090899; }
+.cover { position: relative; z-index: 2; width: 100%; height: 100%; overflow: hidden; padding: 7% 8%; color: #202117; background-color: #c78339; border: 1px solid #704515; border-radius: 3px 9px 9px 4px; box-shadow: -8px 11px 0 #75461f, -13px 17px 0 #2f251775, 8px 35px 65px #1b120bc4; background-image: radial-gradient(circle at 24% 13%, #ffd68f70, transparent 35%), radial-gradient(ellipse at 76% 72%, #d64b2c24, transparent 34%), radial-gradient(ellipse at 24% 82%, #ffbd392b, transparent 31%), linear-gradient(100deg, transparent 68%, #4a2b0d1c 69%, transparent 71%); transform: rotate(.35deg); transform-origin: left center; transform-style: preserve-3d; backface-visibility: hidden; animation: land .8s cubic-bezier(.2,.8,.2,1) both; }
 .cover.opening { pointer-events: none; animation: openCover .9s cubic-bezier(.6,0,.18,1) both; }
-.cover::before { content: ''; position: absolute; inset: 0 auto 0 3%; width: 7px; background: #304c3e99; box-shadow: 4px 0 #d5b57d42, 10px 0 #3d2c1d28; }
-.cover::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5; background: repeating-linear-gradient(88deg, transparent 0 14px, #56210e0c 15px), linear-gradient(98deg, transparent 65%, #611e1026 66%, transparent 68%); }
-.cover-brand { position: absolute; z-index: 2; top: 52%; left: 10%; display: flex; align-items: end; gap: 15px; color: #173d78; transform: rotate(-2deg); }
-.cover-brand strong { font: 700 clamp(58px, 11vw, 98px)/.72 'Kalam', cursive; letter-spacing: -.08em; text-shadow: .7px .7px 0 #173d7860; }
+.cover::before { content: ''; position: absolute; inset: 0 auto 0 3%; width: 7px; background: #155a47; box-shadow: 4px 0 #e4bd7355, 10px 0 #173f312f; }
+.cover::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5; background: linear-gradient(98deg, transparent 65%, #611e1026 66%, transparent 68%); }
+.cover-brand { position: absolute; z-index: 2; top: 52%; left: 10%; display: flex; align-items: end; gap: 15px; color: #074fa3; transform: rotate(-2deg); }
+.cover-brand strong { font: 700 clamp(58px, 11vw, 98px)/.72 'Kalam', cursive; letter-spacing: -.08em; text-shadow: .8px .8px 0 #053b7c80; }
 .cover-brand small { margin-bottom: 3px; font: 700 clamp(20px, 4vw, 35px)/1 'Noto Sans Devanagari', sans-serif; }
 .cover-edition { position: absolute; top: 7.2%; left: 9%; font-size: clamp(6px, 1vw, 9px); letter-spacing: .18em; opacity: .72; }
-.identity-slip { position: absolute; z-index: 2; top: 17%; left: 9%; right: 8%; padding: 4% 5% 3%; border: 1px solid #9a8d76; color: #29251f; background-color: #fffdf6; background-image: repeating-linear-gradient(transparent 0 26px, #7b9cbd38 27px 28px); box-shadow: 1px 2px 0 #9e3d1c, 4px 6px 10px #5a1f1366; transform: rotate(-.35deg); }
+.identity-slip { position: absolute; z-index: 2; top: 17%; left: 9%; right: 8%; padding: 4% 5% 3%; border: 1px solid #6f89a3; border-bottom: 3px solid #c33f35; color: #20251f; background-color: #fffdf2; background-image: repeating-linear-gradient(transparent 0 26px, #4f8bc33f 27px 28px); box-shadow: 2px 3px 0 #7a471f, 5px 8px 14px #4b281861; transform: rotate(-.35deg); }
 .identity-slip::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .28; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
 .identity-slip p { position: relative; display: grid; grid-template-columns: 58px 1fr; align-items: end; gap: 8px; margin: 0 0 7px; }
 .identity-slip span { font-size: clamp(7px, 1vw, 9px); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
@@ -38,8 +38,8 @@ button { color: inherit; }
 .student-meta { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 6px; border-top: 1px solid #91846e; padding-top: 7px; }
 .student-meta p { display: flex; align-items: baseline; gap: 5px; margin: 0; white-space: nowrap; }
 .student-meta b { color: #213e6d; font: 700 clamp(13px, 2vw, 17px)/1 'Caveat', cursive; }
-.cover-stamp { position: absolute; left: 12%; bottom: 13%; padding: 6px 10px 3px; border: 3px double #702219; border-radius: 50%; color: #702219; font-size: clamp(8px, 1.5vw, 11px); font-weight: 600; line-height: 1.15; letter-spacing: .11em; text-align: center; opacity: .68; transform: rotate(-12deg); }
-.open-book { position: absolute; right: 0; bottom: 0; z-index: 3; width: 150px; height: 128px; border: 0; padding: 0; background: linear-gradient(135deg, transparent 49%, #d9c18e 50%); cursor: pointer; filter: drop-shadow(-5px -5px 5px #4d351a3f); font: 700 18px 'Kalam', cursive; }
+.cover-stamp { position: absolute; left: 12%; bottom: 13%; padding: 6px 10px 3px; border: 3px double #a52f2a; border-radius: 50%; color: #a52f2a; font-size: clamp(8px, 1.5vw, 11px); font-weight: 600; line-height: 1.15; letter-spacing: .11em; text-align: center; opacity: .82; transform: rotate(-12deg); }
+.open-book { position: absolute; right: 0; bottom: 0; z-index: 3; width: 150px; height: 128px; border: 0; padding: 0; background: linear-gradient(135deg, transparent 49%, #f1d991 50%); cursor: pointer; filter: drop-shadow(-5px -5px 5px #4d351a3f); font: 700 18px 'Kalam', cursive; }
 .open-book:hover { filter: drop-shadow(-9px -9px 8px #4d351a55); transform: translate(-2px, -2px); }
 .open-book span { padding-left: 8px; }
 .notebook-shell { position: relative; min-height: 100dvh; display: grid; align-items: center; padding: 4vmin 4vmin 4vmin clamp(220px, 20vw, 310px); box-shadow: inset 0 0 110px #15080585; }
@@ -52,7 +52,7 @@ button { color: inherit; }
 .opening-desk .tools { animation: toolsArrive .7s cubic-bezier(.18,.78,.2,1) .42s both; }
 .notebook::before { content: ''; position: absolute; z-index: -2; inset: -5px -7px -9px; border-radius: 8px; background: #813719; box-shadow: 0 5px 0 #4a1f12, 0 10px 18px #210c0866; transform: rotate(.35deg); }
 .notebook::after { content: ''; position: absolute; z-index: 5; top: 2%; bottom: 2%; left: 50%; width: 10px; pointer-events: none; transform: translateX(-50%); background: radial-gradient(circle, #8d795c 0 1px, transparent 1.7px) center/5px 28px, linear-gradient(90deg, transparent, #6b543529, transparent); opacity: .75; }
-.page { position: relative; overflow: hidden; border: 1px solid #b9a06f; background-color: #e7d4a7; background-image: linear-gradient(90deg, transparent 0 10%, #bd5c5c80 10% 10.25%, transparent 10.25%), repeating-linear-gradient(transparent 0 31px, #668db047 32px 33px); box-shadow: inset 0 0 44px #61431f3b, inset 0 -8px 12px #7c63332e; }
+.page { position: relative; overflow: hidden; border: 1px solid #b9a06f; background-color: #f0dfae; background-image: linear-gradient(90deg, transparent 0 10%, #cf505b85 10% 10.25%, transparent 10.25%), repeating-linear-gradient(transparent 0 31px, #4d83b950 32px 33px); box-shadow: inset 0 0 44px #61431f30, inset 0 -8px 12px #7c633326; }
 .page::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .18; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
 .page-left { border-radius: 8px 1px 1px 8px; transform-origin: right; box-shadow: inset -26px 0 26px -28px #1a100c; }
 .page-right { border-radius: 1px 8px 8px 1px; transform-origin: left; box-shadow: inset 26px 0 26px -28px #1a100c; }
@@ -126,7 +126,7 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: 
 @keyframes foldPage { 0% { opacity: 0; transform: rotateY(90deg) rotateZ(8deg); } 25% { opacity: 1; } 100% { opacity: 1; transform: rotateY(0) rotateZ(0); } }
 
 @media (max-width: 700px) {
-  .desk, .notebook-shell, .received { background-image: linear-gradient(120deg, #ffd98b0d, transparent 42%, #1327181f), url('./assets/indian-school-desk-mobile-v2.webp'); }
+  .desk, .notebook-shell, .received { background-image: linear-gradient(115deg, #ffe38a12, transparent 45%, #075b3a12), url('./assets/indian-school-desk-mobile-watercolour.webp'); }
   .desk { padding: 18px; }
   .book-stage { width: min(520px, 82vw); }
   .cover-edition { left: 11%; }
