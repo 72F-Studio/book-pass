@@ -207,6 +207,14 @@ function drawPage(opening = false) {
     </section>`
 
   const canvas = app.querySelector<HTMLCanvasElement>('#paper')!
+  if (opening) {
+    const notebook = app.querySelector<HTMLElement>('.notebook')!
+    notebook.addEventListener('animationend', event => {
+      if (event.target !== notebook || event.animationName !== 'spreadSettle') return
+      notebook.classList.remove('opening-spread')
+      app.querySelector('.notebook-shell')!.classList.remove('opening-desk')
+    })
+  }
   const ink = app.querySelector<HTMLElement>('.ink-status')!
   const page = app.querySelector<HTMLElement>('.page-right')!
   const passButton = app.querySelector<HTMLButtonElement>('.pass')!
