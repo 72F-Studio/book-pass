@@ -1,6 +1,6 @@
 # Book Pass Progress
 
-## Status: Phase 3 in progress
+## Status: Complete
 
 - [x] Cover and name-on-notebook identity
 - [x] Pointer-event drawing with three tools, four inks, and undo
@@ -11,4 +11,10 @@
 - [x] Compressed ink budget and session draft
 - [x] Production build
 - [x] Public GitHub repository and Pages workflow
-- [ ] Browser validation
+- [x] Live mobile browser validation: cover, draw, pass, receive
+
+## Verification
+
+- `npm run build`
+- GitHub Pages workflow `31505661145`
+- Playwright mobile smoke: 390 x 844, no page errors, 152-character sample payload
