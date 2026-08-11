@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Mono:wght@400;500&family=Kalam:wght@400;700&family=Noto+Sans+Devanagari:wght@700&display=swap');
 
 :root { font-family: 'DM Mono', monospace; color: #1c1b18; background: #5b3928; font-synthesis: none; }
 * { box-sizing: border-box; }
@@ -7,26 +7,24 @@ body { min-height: 100dvh; overflow: hidden; background: #713317; }
 button, input { font: inherit; }
 button { color: inherit; }
 
-.desk, .notebook-shell, .received { background-color: #713317; background-image: linear-gradient(120deg, #ffb75a12, transparent 38%, #1608044d), url('./assets/indian-school-desk.webp'); background-position: center; background-size: cover; }
+.desk, .notebook-shell, .received { background-color: #8d5c27; background-image: linear-gradient(120deg, #ffd98b0d, transparent 42%, #1327181f), url('./assets/indian-school-desk-v2.webp'); background-position: center; background-size: cover; }
 .desk { --rx: 0deg; --ry: 0deg; position: relative; min-height: 100dvh; display: grid; place-items: center; overflow: hidden; padding: 24px; perspective: 1200px; box-shadow: inset 0 0 110px #15080585; }
 .desk::after, .notebook-shell::after, .received::after { content: ''; position: fixed; z-index: 20; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 43%, transparent 48%, #1207046b 120%), repeating-linear-gradient(0deg, #ffffff0a 0 1px, transparent 1px 4px); mix-blend-mode: soft-light; }
-.sunbeam { position: absolute; z-index: 0; top: -15%; left: 14%; width: 58%; height: 130%; pointer-events: none; background: linear-gradient(90deg, transparent, #ffc86d2c 42%, #fff0bf32 58%, transparent); clip-path: polygon(17% 0, 78% 0, 100% 100%, 0 100%); mix-blend-mode: screen; animation: breatheLight 5s ease-in-out infinite alternate; }
-.fan-shadow { position: absolute; z-index: 1; top: -19vmin; right: -7vmin; width: 72vmin; aspect-ratio: 1; pointer-events: none; opacity: .14; animation: turnFan 11s linear infinite; }
+.sunbeam { position: absolute; z-index: 0; top: -15%; left: 14%; width: 58%; height: 130%; pointer-events: none; background: linear-gradient(90deg, transparent, #fff0bf1a 48%, transparent); clip-path: polygon(17% 0, 78% 0, 100% 100%, 0 100%); mix-blend-mode: screen; animation: breatheLight 7s ease-in-out infinite alternate; }
+.fan-shadow { position: absolute; z-index: 1; top: -19vmin; right: -7vmin; width: 72vmin; aspect-ratio: 1; pointer-events: none; opacity: .065; animation: turnFan 14s linear infinite; }
 .fan-shadow::after { content: ''; position: absolute; top: 46%; left: 46%; width: 8%; aspect-ratio: 1; border-radius: 50%; background: #1b0907; }
 .fan-shadow i { position: absolute; top: 48%; left: 50%; width: 46%; height: 7%; border-radius: 100% 10% 70% 18%; background: linear-gradient(90deg, #1b0907, #1b0907aa 65%, transparent); transform-origin: 0 50%; }
 .fan-shadow i:nth-child(2) { transform: rotate(120deg); }
 .fan-shadow i:nth-child(3) { transform: rotate(240deg); }
-.flying-note { position: absolute; z-index: 5; left: 2vw; bottom: 1vh; width: clamp(190px, 25vw, 380px); aspect-ratio: 4 / 3; pointer-events: none; background: url('./assets/paper-plane.webp') center/contain no-repeat; filter: drop-shadow(10px 16px 12px #190806a8); animation: noteFlight 1.55s cubic-bezier(.16,.82,.23,1) .2s both; }
-.period-slip { position: absolute; z-index: 2; top: 7vh; left: 6vw; margin: 0; padding: 12px 18px 9px; color: #183c71; background: #dfd4b5; box-shadow: 4px 5px 0 #502212, 8px 12px 20px #1d0a0870; font: 700 clamp(19px, 2.3vw, 30px)/.95 'Caveat'; transform: rotate(-5deg); }
-.period-slip span { display: block; margin-bottom: 4px; color: #6b1d18; font: 500 8px/1 'DM Mono'; letter-spacing: .18em; }
 .book-stage { position: relative; z-index: 3; width: min(540px, 78vw); aspect-ratio: .72; perspective: 1400px; filter: saturate(.92) contrast(1.04); transform: rotateX(var(--rx)) rotateY(var(--ry)) translateZ(12px); transform-style: preserve-3d; transition: transform .22s ease-out; }
+.book-stage:has(.cover.opening) { transform: translateX(24%) rotateX(2deg) translateZ(20px); transition-duration: .9s; }
 .cover-page-underlay { position: absolute; inset: 1% -1% -1% 1%; border: 1px solid #b39c70; border-radius: 3px 10px 10px 3px; background-color: #e7d4a7; background-image: linear-gradient(90deg, transparent 0 11%, #bd5c5c80 11% 11.3%, transparent 11.3%), repeating-linear-gradient(transparent 0 27px, #668db04d 28px 29px); box-shadow: 8px 14px 0 #6d2e16, 13px 24px 35px #1b090899; }
-.cover { position: relative; z-index: 2; width: 100%; height: 100%; overflow: hidden; padding: 7% 8%; color: #24120c; background: #c85420; border: 1px solid #6b2915; border-radius: 3px 11px 11px 4px; box-shadow: -9px 12px 0 #6d2e16, -14px 18px 0 #3a190f75, 8px 35px 65px #1b0908c4; background-image: radial-gradient(circle at 28% 16%, #ffad6266, transparent 33%), linear-gradient(90deg, #00000015 1px, transparent 1px), linear-gradient(#ffffff0a 1px, transparent 1px); background-size: auto, 4px 4px, 4px 4px; transform: rotate(.45deg); transform-origin: left center; transform-style: preserve-3d; animation: land .8s cubic-bezier(.2,.8,.2,1) both; }
+.cover { position: relative; z-index: 2; width: 100%; height: 100%; overflow: hidden; padding: 7% 8%; color: #292016; background-color: #9f774c; border: 1px solid #5f4329; border-radius: 3px 9px 9px 4px; box-shadow: -8px 11px 0 #6b4b30, -13px 17px 0 #33221675, 8px 35px 65px #1b120bc4; background-image: radial-gradient(circle at 24% 13%, #e7c38a40, transparent 34%), repeating-linear-gradient(88deg, transparent 0 15px, #4d35120c 16px), linear-gradient(100deg, transparent 68%, #40280f1a 69%, transparent 71%); transform: rotate(.35deg); transform-origin: left center; transform-style: preserve-3d; backface-visibility: hidden; animation: land .8s cubic-bezier(.2,.8,.2,1) both; }
 .cover.opening { pointer-events: none; animation: openCover .9s cubic-bezier(.6,0,.18,1) both; }
-.cover::before { content: ''; position: absolute; inset: 0 auto 0 3%; width: 4px; background: #64251470; box-shadow: 4px 0 #ef8b4540, 9px 0 #6f2d1828; }
+.cover::before { content: ''; position: absolute; inset: 0 auto 0 3%; width: 7px; background: #304c3e99; box-shadow: 4px 0 #d5b57d42, 10px 0 #3d2c1d28; }
 .cover::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5; background: repeating-linear-gradient(88deg, transparent 0 14px, #56210e0c 15px), linear-gradient(98deg, transparent 65%, #611e1026 66%, transparent 68%); }
-.cover-brand { position: absolute; z-index: 2; top: 52%; left: 10%; display: flex; align-items: end; gap: 15px; color: #23120c; transform: rotate(-1.5deg); }
-.cover-brand strong { font: 900 clamp(58px, 11vw, 98px)/.72 Arial, sans-serif; letter-spacing: -.1em; text-shadow: 2px 2px 0 #e9863f, 4px 4px 0 #842c16; }
+.cover-brand { position: absolute; z-index: 2; top: 52%; left: 10%; display: flex; align-items: end; gap: 15px; color: #173d78; transform: rotate(-2deg); }
+.cover-brand strong { font: 700 clamp(58px, 11vw, 98px)/.72 'Kalam', cursive; letter-spacing: -.08em; text-shadow: .7px .7px 0 #173d7860; }
 .cover-brand small { margin-bottom: 3px; font: 700 clamp(20px, 4vw, 35px)/1 'Noto Sans Devanagari', sans-serif; }
 .cover-edition { position: absolute; top: 7.2%; left: 9%; font-size: clamp(6px, 1vw, 9px); letter-spacing: .18em; opacity: .72; }
 .identity-slip { position: absolute; z-index: 2; top: 17%; left: 9%; right: 8%; padding: 4% 5% 3%; border: 1px solid #9a8d76; color: #29251f; background-color: #fffdf6; background-image: repeating-linear-gradient(transparent 0 26px, #7b9cbd38 27px 28px); box-shadow: 1px 2px 0 #9e3d1c, 4px 6px 10px #5a1f1366; transform: rotate(-.35deg); }
@@ -41,9 +39,9 @@ button { color: inherit; }
 .student-meta p { display: flex; align-items: baseline; gap: 5px; margin: 0; white-space: nowrap; }
 .student-meta b { color: #213e6d; font: 700 clamp(13px, 2vw, 17px)/1 'Caveat', cursive; }
 .cover-stamp { position: absolute; left: 12%; bottom: 13%; padding: 6px 10px 3px; border: 3px double #702219; border-radius: 50%; color: #702219; font-size: clamp(8px, 1.5vw, 11px); font-weight: 600; line-height: 1.15; letter-spacing: .11em; text-align: center; opacity: .68; transform: rotate(-12deg); }
-.open-book { position: absolute; right: 9%; bottom: 16%; z-index: 3; border: 2px solid #2b160f; padding: 13px 18px; background: #e9863f; box-shadow: 4px 4px 0 #2b160f; cursor: pointer; font-size: 12px; font-weight: 500; letter-spacing: .1em; }
-.open-book:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #2b160f; }
-.open-book span { padding-left: 12px; }
+.open-book { position: absolute; right: 0; bottom: 0; z-index: 3; width: 150px; height: 128px; border: 0; padding: 0; background: linear-gradient(135deg, transparent 49%, #d9c18e 50%); cursor: pointer; filter: drop-shadow(-5px -5px 5px #4d351a3f); font: 700 18px 'Kalam', cursive; }
+.open-book:hover { filter: drop-shadow(-9px -9px 8px #4d351a55); transform: translate(-2px, -2px); }
+.open-book span { padding-left: 8px; }
 .notebook-shell { position: relative; min-height: 100dvh; display: grid; align-items: center; padding: 4vmin 4vmin 4vmin clamp(220px, 20vw, 310px); box-shadow: inset 0 0 110px #15080585; }
 .notebook-shell > * { z-index: 1; }
 .notebook { position: relative; display: grid; grid-template-columns: 1fr 1fr; width: min(980px, 72vw); height: min(78vh, 740px); margin: auto; perspective: 1300px; filter: drop-shadow(0 28px 25px #1d0e0b99); transform: rotate(-.2deg); isolation: isolate; }
@@ -114,8 +112,7 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: 
 .privacy { color: #f2e7d2; margin: 0; padding: 2px 8px; background: #32150dab; }
 
 @keyframes land { from { transform: rotateY(-25deg) translateY(30px); opacity: 0; } }
-@keyframes openCover { 0% { transform: rotate(.45deg) rotateY(0) translateZ(0); } 45% { box-shadow: -34px 28px 34px #1b0908a8; transform: translateX(-17%) rotateY(-62deg) rotateZ(-1deg) translateZ(90px); } 100% { transform: translateX(-52%) rotateY(-128deg) rotateZ(-3deg) translateZ(8px); box-shadow: -5px 9px 8px #1b090866; } }
-@keyframes noteFlight { 0% { opacity: 0; transform: translate3d(110vw,-65vh,480px) rotateZ(38deg) rotateX(58deg) scale(.3); } 55% { opacity: 1; transform: translate3d(22vw,-12vh,170px) rotateZ(-14deg) rotateX(24deg) scale(.75); } 82% { transform: translate3d(-1vw,1vh,18px) rotateZ(5deg) rotateX(4deg) scale(1.04); } 100% { opacity: 1; transform: translate3d(0,0,0) rotateZ(-3deg) scale(1); } }
+@keyframes openCover { 0% { transform: rotate(.35deg) rotateY(0) translateZ(0); } 55% { box-shadow: -34px 28px 34px #1b0908a8; transform: translateX(-22%) rotateY(-70deg) rotateZ(-1deg) translateZ(85px); } 100% { transform: translateX(-68%) rotateY(-108deg) rotateZ(-2deg) translateZ(8px); box-shadow: -5px 9px 8px #1b090866; } }
 @keyframes turnFan { to { transform: rotate(360deg); } }
 @keyframes breatheLight { to { opacity: .55; transform: translateX(1.5%); } }
 @keyframes spreadSettle { from { opacity: 0; transform: rotateX(24deg) translateY(10vh) scale(.74); } to { opacity: 1; transform: rotateX(0) translateY(0) scale(1) rotate(-.2deg); } }
@@ -129,7 +126,7 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: 
 @keyframes foldPage { 0% { opacity: 0; transform: rotateY(90deg) rotateZ(8deg); } 25% { opacity: 1; } 100% { opacity: 1; transform: rotateY(0) rotateZ(0); } }
 
 @media (max-width: 700px) {
-  .desk, .notebook-shell, .received { background-image: linear-gradient(120deg, #ffb75a12, transparent 38%, #1608044d), url('./assets/indian-school-desk-mobile.webp'); }
+  .desk, .notebook-shell, .received { background-image: linear-gradient(120deg, #ffd98b0d, transparent 42%, #1327181f), url('./assets/indian-school-desk-mobile-v2.webp'); }
   .desk { padding: 18px; }
   .book-stage { width: min(520px, 82vw); }
   .cover-edition { left: 11%; }

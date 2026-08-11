@@ -130,12 +130,10 @@ function cover(isReply = false) {
     <section class="desk">
       <div class="sunbeam" aria-hidden="true"></div>
       <div class="fan-shadow" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="flying-note" aria-hidden="true"></div>
-      <p class="period-slip" aria-hidden="true"><span>PERIOD 04</span>last bench only.</p>
       <div class="book-stage">
         <div class="cover-page-underlay" aria-hidden="true"></div>
         <div class="cover ${isReply ? 'reply-cover' : ''}">
-          <span class="cover-edition">SCHOOL SUPPLY · NO. 01</span>
+          <span class="cover-edition">STANDARD LONG NOTEBOOK · 192 PAGES</span>
           <div class="identity-slip">
             <p><span>SCHOOL</span><strong>${SCHOOL_DETAILS.school}</strong></p>
             <label class="name-label"><span>Name:</span><input id="name" maxlength="28" autocomplete="name" value="${escapeHtml(sender)}" autofocus /></label>
@@ -146,7 +144,7 @@ function cover(isReply = false) {
             </div>
           </div>
           <div class="cover-brand"><strong>BOOK<br>PASS</strong><small>पर्ची</small></div>
-          <span class="cover-stamp">ROUGH<br>WORK</span>
+          <span class="cover-stamp">ROUGH<br>BOOK</span>
           <button class="open-book" type="button">OPEN <span>→</span></button>
         </div>
       </div>
