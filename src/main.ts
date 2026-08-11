@@ -143,7 +143,7 @@ function cover(isReply = false) {
               <p><span>HOUSE</span><b>${SCHOOL_DETAILS.house}</b></p>
             </div>
           </div>
-          <div class="cover-brand"><strong>BOOK<br>PASS</strong><small>पर्ची</small></div>
+          <div class="cover-brand"><strong>BOOK<br>PASS</strong></div>
           <span class="cover-stamp">ROUGH<br>BOOK</span>
           <button class="open-book" type="button">OPEN <span>→</span></button>
         </div>
@@ -190,10 +190,9 @@ function drawPage(opening = false) {
           <div class="ink-status" aria-live="polite"></div>
           <aside class="limit-note" role="status">PAGE FULL.<strong>pass the note now.</strong></aside>
           <span class="page-number">13</span>
-          <button class="pass" type="button" aria-label="Pass this note"><span>pass it</span></button>
+          <button class="pass" type="button" aria-label="Pass this note"><span>take a look at this</span></button>
         </div>
         <canvas id="paper" class="draw-surface" aria-label="Draw your note here"></canvas>
-        <div class="fold-layer" aria-hidden="true"><span>passed.</span></div>
       </div>
       <nav class="tools" aria-label="Drawing tools">
         ${(['pen', 'pencil', 'brush'] as Tool[]).map(value => `<button data-tool="${value}" class="${tool === value ? 'selected' : ''}" aria-label="${value}"></button>`).join('')}
@@ -226,7 +225,7 @@ function drawPage(opening = false) {
     pageFull = full
     page.classList.toggle('full', full)
     passButton.classList.toggle('pulse', full)
-    passButton.querySelector('span')!.textContent = full ? 'PASS NOW' : 'pass it'
+    passButton.querySelector('span')!.textContent = full ? 'page full — send it' : 'take a look at this'
   }
   const updateInk = () => {
     const used = payloadBytes()
@@ -309,16 +308,16 @@ function drawPage(opening = false) {
 function passNote() {
   if (!strokes.length) return
   const notebook = app.querySelector('.notebook')!
-  notebook.classList.add('folding')
+  notebook.classList.add('sending')
   setTimeout(() => {
     const fragment = encode({ v: 1, from: sender, strokes, layout: currentLayout(), aspect: currentAspect() })
     const url = `${location.origin}${location.pathname}#${fragment}`
-    notebook.classList.remove('folding')
+    notebook.classList.remove('sending')
     app.insertAdjacentHTML('beforeend', `
       <div class="sheet-backdrop">
         <section class="pass-sheet" aria-label="Pass your note">
           <div class="sheet-grab"></div>
-          <p>fold it. pass it.</p>
+          <p>send it flying.</p>
           <button class="share-note">PASS TO A FRIEND <span>↗</span></button>
           <button class="copy-note">copy link</button>
           <button class="back-note">back to notebook</button>
@@ -341,7 +340,7 @@ function passNote() {
     backdrop.addEventListener('click', event => {
       if (event.target === backdrop) backdrop.remove()
     })
-  }, 950)
+  }, 760)
 }
 
 async function copy(value: string) {

@@ -22,9 +22,8 @@ button { color: inherit; }
 .cover { position: relative; z-index: 2; width: 100%; height: 100%; overflow: hidden; padding: 7% 8%; color: #202117; background: #d99126 url('./assets/notebook-cover-watercolour.webp') center/cover no-repeat; border: 1px solid #704515; border-radius: 3px 9px 9px 4px; box-shadow: -8px 11px 0 #75461f, -13px 17px 0 #2f251775, 8px 35px 65px #1b120bc4; transform: rotate(.35deg); transform-origin: left center; transform-style: preserve-3d; backface-visibility: hidden; animation: land .8s cubic-bezier(.2,.8,.2,1) both; }
 .cover.opening { pointer-events: none; animation: openCover .9s cubic-bezier(.6,0,.18,1) both; }
 .cover::before, .cover::after { content: none; }
-.cover-brand { position: absolute; z-index: 2; top: 52%; left: 10%; display: flex; align-items: end; gap: 15px; color: #074fa3; transform: rotate(-2deg); }
+.cover-brand { position: absolute; z-index: 2; top: 58%; left: 50%; color: #074fa3; text-align: center; transform: translate(-50%, -50%) rotate(-2deg); }
 .cover-brand strong { font: 700 clamp(58px, 11vw, 98px)/.72 'Kalam', cursive; letter-spacing: -.08em; text-shadow: .8px .8px 0 #053b7c80; }
-.cover-brand small { margin-bottom: 3px; font: 700 clamp(20px, 4vw, 35px)/1 'Noto Sans Devanagari', sans-serif; }
 .cover-edition { position: absolute; top: 7.2%; left: 9%; font-size: clamp(6px, 1vw, 9px); letter-spacing: .18em; opacity: .72; }
 .identity-slip { position: absolute; z-index: 2; top: 17%; left: 9%; right: 8%; padding: 4% 5% 3%; border: 1px solid #6f89a3; border-bottom: 3px solid #c33f35; color: #20251f; background-color: #fffdf2; background-image: repeating-linear-gradient(transparent 0 26px, #4f8bc33f 27px 28px); box-shadow: 2px 3px 0 #7a471f, 5px 8px 14px #4b281861; transform: rotate(-.35deg); }
 .identity-slip::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .28; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
@@ -60,17 +59,18 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: 
 .draw-surface { position: absolute; z-index: 2; inset: 0; }
 .page-number { position: absolute; bottom: 10px; right: 18px; color: #675f50; font: 18px 'Caveat'; }
 .page-left .page-number { right: auto; left: 18px; }
-.pass { position: absolute; z-index: 3; right: 0; bottom: 0; width: 112px; height: 100px; overflow: hidden; border: 0; background: linear-gradient(135deg, transparent 49%, #ddd1b4 50%); cursor: pointer; filter: drop-shadow(-3px -3px 3px #5c4d3535); }
-.pass span { position: absolute; right: 9px; bottom: 18px; font: 700 20px 'Caveat'; transform: rotate(-43deg); }
-.page-right.full .pass { width: 164px; height: 146px; background: linear-gradient(135deg, transparent 49%, #e2cfa2 50%); filter: drop-shadow(-8px -8px 8px #5c2f2470); }
-.page-right.full .pass span { right: 10px; bottom: 26px; color: #9d1e1e; font-size: 23px; }
+.pass { position: absolute; z-index: 3; right: 12px; bottom: 6px; width: 210px; height: 158px; border: 0; padding: 0; background: url('./assets/paper-plane-watercolour.webp') center/contain no-repeat; cursor: pointer; filter: drop-shadow(5px 9px 6px #4b301c55); transition: transform .2s ease, filter .2s ease; }
+.pass:hover { transform: translate(-5px, -4px) rotate(-2deg); filter: drop-shadow(10px 14px 8px #4b301c66); }
+.pass span { position: absolute; top: 48%; right: 16%; width: 43%; color: #192b49; font: 700 16px/.9 'Kalam'; text-align: center; transform: rotate(4deg); }
+.page-right.full .pass { transform: scale(1.12) rotate(-3deg); filter: drop-shadow(12px 16px 9px #8c271f66); }
+.page-right.full .pass span { color: #9d1e1e; font-size: 15px; }
 .pass.pulse { animation: liftPass .65s ease-in-out infinite alternate; }
 .ink-status { position: absolute; z-index: 4; left: 13%; bottom: 9px; min-height: 16px; color: #9d1e1e; font: 700 14px 'Caveat'; letter-spacing: .05em; transform: rotate(-1deg); }
 .ink-status.near-full { padding: 1px 5px; background: #f0e2bcba; }
 .limit-note { position: absolute; z-index: 7; top: 22%; right: -12px; display: grid; gap: 3px; width: 190px; padding: 13px 17px 12px; border: 1px solid #aa9773; color: #9d1e1e; background: #f1e6c9; box-shadow: 5px 7px 0 #5e2818, 9px 12px 20px #2910086e; font-size: 11px; letter-spacing: .12em; opacity: 0; pointer-events: none; transform: translateX(120%) rotate(2deg); }
 .limit-note strong { color: #1e1b17; font: 700 23px/1 'Caveat'; letter-spacing: 0; }
 .limit-note.show { animation: slideNote 2.6s cubic-bezier(.2,.8,.2,1) both; }
-.tools { position: absolute; z-index: 8; top: 50%; left: 1.5vw; width: min(260px, 19vw); aspect-ratio: 793 / 1983; border: 0; background: url('./assets/geometry-box.webp') center/contain no-repeat; filter: drop-shadow(9px 16px 12px #1c090899); transform: translateY(-50%) rotate(-1.2deg); }
+.tools { position: absolute; z-index: 8; top: 50%; left: 1.5vw; width: min(260px, 19vw); aspect-ratio: 836 / 1881; border: 0; background: url('./assets/geometry-box-watercolour.webp') center/contain no-repeat; filter: drop-shadow(9px 16px 12px #1c090870); transform: translateY(-50%) rotate(-1.2deg); }
 .tools button { position: absolute; min-width: 34px; min-height: 34px; padding: 0; border: 0; border-radius: 45%; outline: 0; background: transparent; cursor: pointer; }
 .tools button::after { content: ''; position: absolute; inset: 2px; border: 2px solid transparent; border-radius: 48% 41% 46% 43%; transform: rotate(-5deg); transition: border-color .15s, transform .15s; }
 .tools button:focus-visible::after, .tools button.selected::after { border-color: #174c92cc; box-shadow: 1px 1px 0 #f2ead3aa; transform: rotate(3deg) scale(1.05); }
@@ -84,9 +84,7 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: 
 .colours button:nth-child(2) { left: 25%; }
 .colours button:nth-child(3) { left: 50%; }
 .colours button:nth-child(4) { left: 75%; }
-.fold-layer { position: absolute; z-index: 8; top: 0; right: 0; width: 50%; height: 100%; pointer-events: none; opacity: 0; transform-origin: 0 100%; background: #e2d8be; clip-path: polygon(100% 0, 100% 100%, 0 100%); box-shadow: -14px -14px 25px #271a1145; }
-.fold-layer span { position: absolute; right: 15%; bottom: 20%; font: 700 36px 'Caveat'; transform: rotate(-40deg); }
-.folding .fold-layer { animation: foldPage .95s cubic-bezier(.7,0,.2,1) both; }
+.sending .pass { pointer-events: none; animation: throwPlane .72s cubic-bezier(.45,0,.75,.35) both; }
 
 .sheet-backdrop { position: fixed; z-index: 30; inset: 0; display: grid; align-items: end; background: #1e110da3; backdrop-filter: blur(2px); }
 .pass-sheet { display: grid; justify-items: center; gap: 14px; width: min(600px, calc(100% - 24px)); margin: 0 auto 12px; padding: 12px 24px 25px; border: 1px solid #b8a77e; border-radius: 5px; background-color: #f0e6cd; background-image: repeating-linear-gradient(transparent 0 27px, #769bc32b 28px 29px); box-shadow: 0 -2px 0 #ddd0ae, 9px 12px 35px #120b08a6; animation: rise .35s ease-out; transform: rotate(-.4deg); }
@@ -122,7 +120,7 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: 
 @keyframes rise { from { transform: translateY(100%); } }
 @keyframes liftPass { to { transform: translate(-6px, -5px); filter: drop-shadow(-12px -12px 10px #a62a2780); } }
 @keyframes slideNote { 0% { opacity: 0; transform: translateX(120%) rotate(2deg); } 12%, 82% { opacity: 1; transform: translateX(0) rotate(-2deg); } 100% { opacity: 0; transform: translateX(120%) rotate(2deg); } }
-@keyframes foldPage { 0% { opacity: 0; transform: rotateY(90deg) rotateZ(8deg); } 25% { opacity: 1; } 100% { opacity: 1; transform: rotateY(0) rotateZ(0); } }
+@keyframes throwPlane { 0% { transform: translate3d(0,0,0) rotate(0) scale(1); } 28% { transform: translate3d(-28px,18px,40px) rotate(8deg) scale(1.06); } 100% { opacity: 0; transform: translate3d(-85vw,-48vh,320px) rotate(-24deg) scale(.38); } }
 
 @media (max-width: 700px) {
   .desk, .notebook-shell, .received { background-image: linear-gradient(115deg, #ffe38a12, transparent 45%, #075b3a12), url('./assets/indian-school-desk-mobile-watercolour.webp'); }
@@ -137,9 +135,10 @@ canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: 
   .notebook::after { display: none; }
   .page-left { display: none; }
   .page-right { width: 100%; height: 100%; border-radius: 5px; }
-  .fold-layer { width: 100%; }
   .tools { left: -72px; width: 150px; }
   .tools button { min-width: 28px; min-height: 30px; }
+  .pass { right: 3px; width: 148px; height: 111px; }
+  .pass span { font-size: 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
