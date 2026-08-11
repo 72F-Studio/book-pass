@@ -104,13 +104,15 @@ function cover(isReply = false) {
   app.innerHTML = `
     <section class="desk">
       <div class="cover ${isReply ? 'reply-cover' : ''}">
-        <div class="cover-brand">CLASSMATE</div>
+        <div class="cover-brand"><small>BOOK PASS</small><strong>पर्ची</strong></div>
+        <span class="cover-edition">SCHOOL SUPPLY · NO. 01</span>
         <div class="cover-lines" aria-hidden="true"></div>
         <label class="name-label">
-          <span>NAME</span>
+          <span>नाम / NAME</span>
           <input id="name" maxlength="28" autocomplete="name" value="${escapeHtml(sender)}" autofocus />
         </label>
         <p class="cover-copy">${isReply ? `${escapeHtml(replyTo)} passed you a note.` : 'pass notes like school.<br>typing is disabled.'}</p>
+        <span class="cover-stamp">ROUGH<br>WORK</span>
         <button class="open-book" type="button">OPEN <span>→</span></button>
         <span class="notebook-word">Notebook</span>
       </div>

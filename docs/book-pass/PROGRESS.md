@@ -12,6 +12,7 @@
 - [x] Production build
 - [x] Public GitHub repository and Pages workflow
 - [x] Live mobile browser validation: cover, draw, pass, receive
+- [x] Indian school-desk art direction with responsive desktop/mobile assets
 
 ## Verification
 
